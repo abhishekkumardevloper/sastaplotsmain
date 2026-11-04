@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+
+# Allow search engines to index all public property pages
+Allow: /properties/
+Allow: /search
+Allow: /buy
+Allow: /rent
+Allow: /commercial
+Allow: /plots
+Allow: /agricultural-land
+Allow: /locations
+Allow: /about
+Allow: /contact
+Allow: /faqs
+Allow: /privacy
+Allow: /terms
+
+Sitemap: https://sastaplots.com/sitemap.xml

@@ -1,0 +1,37 @@
+{
+  "properties": [],
+  "profiles": [
+    {
+      "id": "admin-1",
+      "email": "admin@sastaplots.com",
+      "full_name": "Super Administrator",
+      "role": "super_admin",
+      "is_active": true,
+      "phone_verified": true,
+      "is_email_verified": true,
+      "verification_status": "verified",
+      "created_at": "2026-10-30T18:13:31.733Z",
+      "updated_at": "2026-10-30T18:13:31.744Z"
+    }
+  ],
+  "enquiries": [],
+  "audit_logs": [
+    {
+      "id": "audit-50c457a2-b78d-444f-94ce-b7b37218a389",
+      "actor_id": "admin-1",
+      "action": "property_create",
+      "target_type": "property",
+      "target_id": "prop-905bb0ad-ad81-424d-bde1-f6472ce2e2bf",
+      "details": {
+        "title": "Yamuna Expressway Commercial Corner Plot"
+      },
+      "created_at": "2026-10-30T18:13:31.758Z"
+    }
+  ],
+  "site_settings": {
+    "brand_name": "Sasta Plots",
+    "contact_email": "support@sastaplots.com",
+    "contact_phone": "+91 98765 43210",
+    "maintenance_mode": false
+  }
+}
