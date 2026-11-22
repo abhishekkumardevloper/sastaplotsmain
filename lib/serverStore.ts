@@ -80,6 +80,8 @@ export async function getProperties(params: {
   intent?: string
   category?: string
   property_type?: string
+  owner_id?: string
+  seller_category?: string
   status?: string
   state_id?: number
   city_id?: number
@@ -156,8 +158,16 @@ export async function getProperties(params: {
     list = list.filter((p) => p.listing_intent === params.intent)
   }
 
+  if (params.owner_id) {
+    list = list.filter((p) => p.owner_id === params.owner_id)
+  }
+
   if (params.category) {
     list = list.filter((p) => p.category === params.category)
+  }
+
+  if (params.seller_category) {
+    list = list.filter((p) => (p.seller_category || 'owner').toLowerCase() === params.seller_category!.toLowerCase())
   }
 
   if (params.property_type) {
@@ -455,6 +465,36 @@ export async function updateEnquiry(id: string, payload: Partial<Enquiry>): Prom
   return memoryDb.enquiries[idx]
 }
 
+export async function getUsers(): Promise<Profile[]> {
+  loadLocalDb()
+  return memoryDb.profiles
+}
+
+export async function createUser(userData: Partial<Profile>): Promise<Profile> {
+  loadLocalDb()
+  const newUser: Profile = {
+    id: userData.id || `user-${Date.now()}`,
+    email: userData.email || '',
+    full_name: userData.full_name || '',
+    phone: userData.phone || '',
+    role: (userData.role as any) || 'buyer',
+    is_active: userData.is_active ?? true,
+    phone_verified: userData.phone_verified ?? false,
+    is_email_verified: userData.is_email_verified ?? true,
+    verification_status: userData.verification_status || 'verified',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }
+  const existingIdx = memoryDb.profiles.findIndex((p) => p.email === newUser.email || p.id === newUser.id)
+  if (existingIdx >= 0) {
+    memoryDb.profiles[existingIdx] = { ...memoryDb.profiles[existingIdx], ...newUser }
+  } else {
+    memoryDb.profiles.push(newUser)
+  }
+  saveLocalDb()
+  return newUser
+}
+
 export async function updateUser(id: string, payload: Partial<Profile>): Promise<Profile | null> {
   loadLocalDb()
   const idx = memoryDb.profiles.findIndex((p) => p.id === id)
@@ -464,10 +504,42 @@ export async function updateUser(id: string, payload: Partial<Profile>): Promise
   return memoryDb.profiles[idx]
 }
 
+export async function getSettings(): Promise<Record<string, any>> {
+  loadLocalDb()
+  return memoryDb.site_settings || {}
+}
+
 export async function updateSetting(key: string, value: any): Promise<Record<string, any>> {
   loadLocalDb()
   memoryDb.site_settings = memoryDb.site_settings || {}
   memoryDb.site_settings[key] = value
   saveLocalDb()
   return memoryDb.site_settings
+}
+
+export async function getAuditLogs(): Promise<AuditLog[]> {
+  loadLocalDb()
+  return memoryDb.audit_logs || []
+}
+
+export async function createAuditLog(log: Partial<AuditLog>): Promise<AuditLog> {
+  loadLocalDb()
+  const newLog: AuditLog = {
+    id: `log-${uuidv4().substring(0, 8)}`,
+    actor_id: log.actor_id || 'admin-1',
+    actor: log.actor || { email: 'admin@sastaplots.com', full_name: 'Super Admin' },
+    action: log.action || 'admin_action',
+    target_type: log.target_type || 'property',
+    target_id: log.target_id || '',
+    details: log.details || {},
+    ip_address: log.ip_address || '127.0.0.1',
+    created_at: new Date().toISOString(),
+  }
+  memoryDb.audit_logs = memoryDb.audit_logs || []
+  memoryDb.audit_logs.unshift(newLog)
+  if (memoryDb.audit_logs.length > 100) {
+    memoryDb.audit_logs = memoryDb.audit_logs.slice(0, 100)
+  }
+  saveLocalDb()
+  return newLog
 }

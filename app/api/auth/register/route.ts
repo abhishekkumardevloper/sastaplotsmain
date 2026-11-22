@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
+import { createUser } from '@/lib/serverStore'
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const user = {
+    const user = await createUser({
       id: `user-${Date.now()}`,
       email,
       full_name,
@@ -41,8 +42,8 @@ export async function POST(request: NextRequest) {
       is_active: true,
       phone_verified: false,
       is_email_verified: true,
-      verification_status: 'unverified',
-    }
+      verification_status: 'verified',
+    })
 
     return NextResponse.json({
       success: true,

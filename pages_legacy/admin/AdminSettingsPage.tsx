@@ -90,9 +90,9 @@ export const AdminSettingsPage: React.FC = () => {
     queryFn: async () => {
       try {
         const res = await api.get('/admin/settings')
-        return res.data
+        return res.data?.data || res.data
       } catch (err) {
-        console.warn('Fallback site settings:', err)
+        console.error('Failed to load site settings:', err)
         return {
           brand: brandSettings,
           social: socialSettings,

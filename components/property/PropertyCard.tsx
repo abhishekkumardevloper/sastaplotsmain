@@ -1,7 +1,19 @@
 'use client'
+
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MapPin, Heart, ShieldCheck, Sparkles, ArrowRight, Layers } from 'lucide-react'
+import {
+  MapPin,
+  Heart,
+  ShieldCheck,
+  Sparkles,
+  ArrowRight,
+  Layers,
+  Compass,
+  CheckCircle2,
+  PhoneCall,
+  UserCheck,
+} from 'lucide-react'
 import toast from 'react-hot-toast'
 import type { Property } from '@/types'
 import { formatPrice, formatArea, PROPERTY_TYPE_LABELS, getCoverImage } from '@/lib/utils'
@@ -20,6 +32,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   property,
   showFavouriteButton = true,
   className = '',
+  viewMode = 'grid',
 }) => {
   const { isAuthenticated } = useAuthStore()
   const [isFavourite, setIsFavourite] = useState(false)
@@ -34,7 +47,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
     property.state?.name,
   ]
     .filter(Boolean)
-    .join(', ') || property.address || 'Location on request'
+    .join(', ') || property.address || 'Prime Location'
 
   const propertyTypeDisplay =
     PROPERTY_TYPE_LABELS[property.property_type] ||
@@ -42,16 +55,22 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
       ? property.property_type.replace(/_/g, ' ').toUpperCase()
       : 'PLOT')
 
-  const sellerCategoryDisplay = property.seller_category
-    ? property.seller_category.charAt(0).toUpperCase() + property.seller_category.slice(1)
-    : 'Owner'
+  // Seller category styling & text
+  const sellerCategory = (property.seller_category || 'owner').toLowerCase()
+  const isBroker = sellerCategory === 'broker'
+  const isBuilder = sellerCategory === 'builder'
+
+  // Price per sqft calculation
+  const calculatedPricePerSqft = property.price_per_unit || (
+    property.price && property.area ? Math.round(property.price / property.area) : null
+  )
 
   const handleFavouriteToggle = async (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
     if (!isAuthenticated) {
-      toast.error('Please log in to save properties to your favourites')
+      toast.error('Please log in to save properties')
       return
     }
 
@@ -68,7 +87,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         toast.success('Removed from favourites')
       }
     } catch {
-      // Keep optimistic UI state for seamless experience
+      // optimistic state preserved
     } finally {
       setIsSaving(false)
     }
@@ -76,34 +95,32 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 
   return (
     <div
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200/90 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-orange-200 hover:shadow-card-hover ${className}`}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10 ${className}`}
     >
       <Link
         to={`/properties/${property.slug}`}
         className="block flex-1 flex flex-col text-inherit no-underline"
       >
-        {/* ================= Image Container (4:3 Aspect Ratio) ================= */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-[#FFF3E6] via-[#FFF8F2] to-[#FFE8D6]">
+        {/* ───────────── Card Image Header ───────────── */}
+        <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden bg-slate-100">
           {coverUrl && !imgError ? (
             <img
               src={coverUrl}
               alt={property.title}
               onError={() => setImgError(true)}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
             />
           ) : (
-            // Graceful Plot Placeholder with warm orange gradient & topography motif
-            <div className="relative flex h-full w-full flex-col items-center justify-center p-6 text-center">
-              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#F47B20_1px,transparent_1px)] [background-size:16px_16px]" />
-              <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-[#F47B20] shadow-sm mb-2">
+            <div className="relative flex h-full w-full flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-orange-50 via-amber-50/50 to-orange-100/40">
+              <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-[#F47B20] shadow-md mb-2">
                 <Layers className="h-7 w-7" />
               </div>
               <span className="relative z-10 text-xs font-bold tracking-wider text-[#F47B20] uppercase">
                 {propertyTypeDisplay}
               </span>
-              <span className="relative z-10 text-[11px] text-gray-500 mt-0.5">
-                Verified Sasta Plot
+              <span className="relative z-10 text-[11px] text-slate-500 mt-0.5">
+                Admin Verified Plot
               </span>
             </div>
           )}
@@ -122,49 +139,75 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
                 Verified
               </span>
             )}
+            {property.status === 'pending_review' && (
+              <span className="badge-pending flex items-center gap-1 shadow-sm">
+                Pending Approval
+              </span>
+            )}
           </div>
 
-          {/* Property Type Floating Tag (Bottom Left of Image) */}
+          {/* Seller Tag (Top Right or Bottom Left) */}
           <div className="absolute bottom-3 left-3 z-10">
-            <span className="rounded-lg bg-black/60 px-2.5 py-1 text-[11px] font-medium tracking-wide text-white backdrop-blur-md">
+            <span
+              className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold tracking-wide backdrop-blur-md shadow-xs ${
+                isBroker
+                  ? 'bg-blue-600/90 text-white'
+                  : isBuilder
+                  ? 'bg-purple-600/90 text-white'
+                  : 'bg-emerald-600/90 text-white'
+              }`}
+            >
+              <UserCheck className="h-3 w-3" />
+              {isBroker ? 'Broker Listing' : isBuilder ? 'Builder Listing' : 'Direct Owner'}
+            </span>
+          </div>
+
+          {/* Property Type Tag (Bottom Right) */}
+          <div className="absolute bottom-3 right-3 z-10">
+            <span className="rounded-lg bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
               {propertyTypeDisplay}
             </span>
           </div>
 
-          {/* Favourite / Save Heart Button (Top Right of Image) */}
+          {/* Save / Favourite Button */}
           {showFavouriteButton && (
             <button
               type="button"
               onClick={handleFavouriteToggle}
               disabled={isSaving}
               aria-label={isFavourite ? 'Remove from saved' : 'Save property'}
-              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-gray-700 backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 hover:bg-white hover:text-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+              className="absolute top-3 right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md backdrop-blur-md transition-all duration-200 hover:scale-110 hover:bg-white hover:text-red-500 cursor-pointer"
             >
               <Heart
                 className={`h-4.5 w-4.5 transition-colors ${
-                  isFavourite ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                  isFavourite ? 'fill-red-500 text-red-500' : 'text-slate-600'
                 }`}
               />
             </button>
           )}
         </div>
 
-        {/* ================= Card Content ================= */}
+        {/* ───────────── Card Body Content ───────────── */}
         <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
           <div>
             {/* Price & Area Header */}
             <div className="flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-1">
-                <span className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
                   {formatPrice(property.price)}
                 </span>
                 {property.listing_intent === 'rent' && (
-                  <span className="text-xs font-medium text-gray-500">/mo</span>
+                  <span className="text-xs font-semibold text-slate-500 ml-1">/month</span>
+                )}
+                {calculatedPricePerSqft && (
+                  <p className="text-[11px] font-medium text-slate-500">
+                    ₹{calculatedPricePerSqft.toLocaleString('en-IN')}/{property.area_unit || 'sq.ft'}
+                  </p>
                 )}
               </div>
 
               <div className="text-right">
-                <span className="inline-block rounded-md bg-orange-50 px-2.5 py-1 text-xs font-semibold text-[#E96512]">
+                <span className="inline-block rounded-xl bg-orange-50 px-2.5 py-1 text-xs font-bold text-[#E96512] border border-orange-200/50">
                   {formatArea(property.area, property.area_unit)}
                 </span>
               </div>
@@ -172,29 +215,49 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 
             {/* Title (2 lines clamp) */}
             <h3
-              className="mt-2.5 text-base font-semibold leading-snug text-gray-900 transition-colors line-clamp-2 group-hover:text-[#F47B20]"
+              className="mt-3 text-base font-bold leading-snug text-slate-900 transition-colors line-clamp-2 group-hover:text-[#F47B20]"
               title={property.title}
             >
               {property.title}
             </h3>
 
-            {/* Location with Pin Icon */}
-            <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-600">
+            {/* Location with Pin */}
+            <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-600">
               <MapPin className="h-3.5 w-3.5 shrink-0 text-[#F47B20]" />
               <span className="truncate">{locationText}</span>
             </div>
+
+            {/* Key Highlights Tag Row */}
+            <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] text-slate-600">
+              {property.facing_direction && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 font-medium">
+                  <Compass className="h-3 w-3 text-slate-400" />
+                  {property.facing_direction.toUpperCase()} Facing
+                </span>
+              )}
+              {property.is_corner_plot && (
+                <span className="inline-block rounded-md bg-emerald-50 text-emerald-700 px-2 py-0.5 font-semibold">
+                  Corner Plot
+                </span>
+              )}
+              {property.road_width && (
+                <span className="inline-block rounded-md bg-slate-100 px-2 py-0.5 font-medium">
+                  {property.road_width}ft Road
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* ================= Bottom Strip: Seller Category & Action ================= */}
-          <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-gray-600">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              <span>By {sellerCategoryDisplay}</span>
+          {/* ───────────── Bottom Action Strip ───────────── */}
+          <div className="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{property.seller_name || (isBroker ? 'Certified Broker' : 'Direct Landowner')}</span>
             </div>
 
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#F47B20] transition-colors group-hover:text-[#E96512]">
-              View Details
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+            <span className="inline-flex items-center gap-1 text-xs font-bold text-[#F47B20] transition-colors group-hover:text-[#E96512]">
+              View Plot
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </div>
         </div>

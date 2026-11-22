@@ -1,5 +1,535 @@
 {
-  "properties": [],
+  "properties": [
+    {
+      "id": "prop-yamuna-exp-01",
+      "slug": "yamuna-expressway-commercial-corner-plot-8291",
+      "owner_id": "broker-101",
+      "title": "Yamuna Expressway Commercial Corner Plot (100ft Road Facing)",
+      "description": "Prime commercial SCO plot situated directly on the Yamuna Expressway service corridor near Sector 22D. Ideal for multi-story commercial complex, corporate office, or luxury retail showroom. Complete freehold registry with immediate possession and verified legal paperwork. 100% boundary wall completed with wide 100ft arterial road connectivity.",
+      "listing_intent": "sell",
+      "category": "commercial",
+      "property_type": "office",
+      "price": 18500000,
+      "price_negotiable": true,
+      "price_per_unit": 3700,
+      "area": 5000,
+      "area_unit": "sqft",
+      "length": 100,
+      "breadth": 50,
+      "address": "Plot No. C-14, Sector 22D, Yamuna Expressway Corridor",
+      "pin_code": "201310",
+      "road_width": 100,
+      "road_access": "pucca",
+      "facing_direction": "north-east",
+      "ownership_type": "freehold",
+      "is_corner_plot": true,
+      "is_on_main_road": true,
+      "nearby_landmarks": [
+        "Jewar International Airport (18 mins)",
+        "Formula 1 Buddh International Circuit",
+        "Pari Chowk Greater Noida Metro"
+      ],
+      "amenities": [
+        "100ft Road Access",
+        "3-Phase Industrial Electricity",
+        "Water Supply Connection",
+        "Clear Title Registry",
+        "RERA Compliant Corridor"
+      ],
+      "seller_name": "Shri Ram Associates & Consultants",
+      "seller_phone": "+91 98101 23456",
+      "seller_email": "shriram.properties@gmail.com",
+      "seller_category": "broker",
+      "status": "approved",
+      "is_featured": true,
+      "is_admin_managed": false,
+      "is_verified": true,
+      "view_count": 342,
+      "enquiry_count": 18,
+      "favourite_count": 27,
+      "images": [
+        {
+          "id": "img-yamuna-1",
+          "property_id": "prop-yamuna-exp-01",
+          "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/yamuna/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-10T10:00:00.000Z"
+        },
+        {
+          "id": "img-yamuna-2",
+          "property_id": "prop-yamuna-exp-01",
+          "url": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/yamuna/2.jpg",
+          "is_cover": false,
+          "sort_order": 2,
+          "created_at": "2026-11-10T10:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 502,
+        "state_id": 1,
+        "name": "Noida",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 1,
+        "name": "Uttar Pradesh",
+        "code": "UP",
+        "is_active": true
+      },
+      "created_at": "2026-11-10T10:00:00.000Z",
+      "updated_at": "2026-11-12T14:30:00.000Z",
+      "published_at": "2026-11-12T14:30:00.000Z"
+    },
+    {
+      "id": "prop-lko-shaheed-02",
+      "slug": "shaheed-path-gated-colony-villa-plot-4412",
+      "owner_id": "client-owner-201",
+      "title": "Shaheed Path Gated Colony East-Facing Villa Plot (2,160 Sq.Ft)",
+      "description": "Direct owner listing. Premium residential villa plot located inside a secure gated residential layout just 800 meters from Shaheed Path, Lucknow. 40ft wide internal paved CC road, underground drainage, and 24x7 security gate. Clean freehold registry with LDA/Zila Panchayat approval. Bank loan easily available from SBI and HDFC.",
+      "listing_intent": "sell",
+      "category": "residential_plot",
+      "property_type": "plot",
+      "price": 6480000,
+      "price_negotiable": true,
+      "price_per_unit": 3000,
+      "area": 2160,
+      "area_unit": "sqft",
+      "length": 60,
+      "breadth": 36,
+      "address": "Sector 7 Layout, Near Medanta Hospital, Shaheed Path",
+      "pin_code": "226002",
+      "road_width": 40,
+      "road_access": "pucca",
+      "facing_direction": "east",
+      "ownership_type": "freehold",
+      "is_corner_plot": false,
+      "is_on_main_road": false,
+      "nearby_landmarks": [
+        "Medanta Super Specialty Hospital (3 mins)",
+        "Ekana International Cricket Stadium",
+        "Phoenix Palassio Mall (5 mins)"
+      ],
+      "amenities": [
+        "Gated Community with Guard",
+        "40ft Concrete Road",
+        "Underground Drainage",
+        "24x7 Street Lights",
+        "Parks & Green Belt"
+      ],
+      "seller_name": "Ramesh Chandra Verma",
+      "seller_phone": "+91 94500 88219",
+      "seller_email": "rcverma.lko@gmail.com",
+      "seller_category": "owner",
+      "status": "approved",
+      "is_featured": true,
+      "is_admin_managed": false,
+      "is_verified": true,
+      "view_count": 520,
+      "enquiry_count": 29,
+      "favourite_count": 41,
+      "images": [
+        {
+          "id": "img-lko-1",
+          "property_id": "prop-lko-shaheed-02",
+          "url": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/lko/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-11T12:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 501,
+        "state_id": 1,
+        "name": "Lucknow",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 1,
+        "name": "Uttar Pradesh",
+        "code": "UP",
+        "is_active": true
+      },
+      "created_at": "2026-11-11T12:00:00.000Z",
+      "updated_at": "2026-11-12T16:00:00.000Z",
+      "published_at": "2026-11-12T16:00:00.000Z"
+    },
+    {
+      "id": "prop-pune-hinjewadi-03",
+      "slug": "fertile-agricultural-farmland-with-tubewell-pune-7721",
+      "owner_id": "client-owner-202",
+      "title": "2 Acres Fertile Agricultural Farmland with Active Tubewell & Electricity",
+      "description": "Beautiful 2-acre fertile agricultural land with rich black cotton soil, 24-hour sweet water tubewell, and dedicated agricultural electricity meter. Boundary fencing completed. Scenic hill view, ideal for farmhouse, organic cultivation, or long-term capital appreciation. Connected via 30ft pucca village road.",
+      "listing_intent": "sell",
+      "category": "agricultural_land",
+      "property_type": "farm_land",
+      "price": 8500000,
+      "price_negotiable": true,
+      "price_per_unit": 97,
+      "area": 87120,
+      "area_unit": "sqft",
+      "length": 300,
+      "breadth": 290,
+      "address": "Talegaon - Hinjewadi Link Road, Taluka Mulshi",
+      "pin_code": "410507",
+      "road_width": 30,
+      "road_access": "pucca",
+      "facing_direction": "north",
+      "ownership_type": "freehold",
+      "is_corner_plot": false,
+      "is_on_main_road": true,
+      "nearby_landmarks": [
+        "Hinjewadi IT Park Phase 3 (20 mins)",
+        "Mumbai-Pune Expressway (15 mins)",
+        "Pawna Lake Scenic Belt"
+      ],
+      "amenities": [
+        "Dedicated Tubewell with Sweet Water",
+        "Solar Fencing & Boundary Wall",
+        "Agricultural Electricity Meter",
+        "Clear 7/12 (Saat Baara) Extract",
+        "Caretaker Room & Storage"
+      ],
+      "seller_name": "Dattatray Patil",
+      "seller_phone": "+91 98220 54321",
+      "seller_email": "dpatil.farm@rediffmail.com",
+      "seller_category": "owner",
+      "status": "approved",
+      "is_featured": false,
+      "is_admin_managed": false,
+      "is_verified": true,
+      "view_count": 289,
+      "enquiry_count": 14,
+      "favourite_count": 19,
+      "images": [
+        {
+          "id": "img-pune-1",
+          "property_id": "prop-pune-hinjewadi-03",
+          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/pune/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-13T09:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 602,
+        "state_id": 5,
+        "name": "Pune",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 5,
+        "name": "Maharashtra",
+        "code": "MH",
+        "is_active": true
+      },
+      "created_at": "2026-11-13T09:00:00.000Z",
+      "updated_at": "2026-11-14T11:00:00.000Z",
+      "published_at": "2026-11-14T11:00:00.000Z"
+    },
+    {
+      "id": "prop-jaipur-ajmer-04",
+      "slug": "ajmer-road-200-gaj-corner-residential-plot-jaipur-5519",
+      "owner_id": "broker-102",
+      "title": "Ajmer Road 200 Gaj Corner Residential Plot (JDA Approved Scheme)",
+      "description": "Verified broker listing by Royal Heritage Estates. Prime 200 Gaj (1,800 Sq.Ft) JDA approved corner residential plot located in a fast-growing township on Ajmer Road, Jaipur. 60ft and 40ft wide two-side open corner plot. Complete registry and immediate possession. Ideal for duplex villa construction with 80% home loan approved by ICICI Bank.",
+      "listing_intent": "sell",
+      "category": "residential_plot",
+      "property_type": "plot",
+      "price": 3800000,
+      "price_negotiable": false,
+      "price_per_unit": 2111,
+      "area": 1800,
+      "area_unit": "sqft",
+      "length": 60,
+      "breadth": 30,
+      "address": "Sector 4, Near DPS School, Ajmer Road Corridor",
+      "pin_code": "302026",
+      "road_width": 60,
+      "road_access": "pucca",
+      "facing_direction": "north-east",
+      "ownership_type": "freehold",
+      "is_corner_plot": true,
+      "is_on_main_road": false,
+      "nearby_landmarks": [
+        "Delhi Public School Jaipur (2 mins)",
+        "Mahindra World City SEZ (10 mins)",
+        "Ajmer Expressway Toll Plaza"
+      ],
+      "amenities": [
+        "JDA Approved Layout",
+        "Dual Road Corner Advantage (60ft & 40ft)",
+        "Underground Water & Electric Lines",
+        "Gated Entry with Boom Barrier",
+        "Community Park & Jogging Track"
+      ],
+      "seller_name": "Royal Heritage Real Estate Services",
+      "seller_phone": "+91 94140 19283",
+      "seller_email": "info@royalheritageestates.in",
+      "seller_category": "broker",
+      "status": "approved",
+      "is_featured": true,
+      "is_admin_managed": false,
+      "is_verified": true,
+      "view_count": 412,
+      "enquiry_count": 22,
+      "favourite_count": 33,
+      "images": [
+        {
+          "id": "img-jaipur-1",
+          "property_id": "prop-jaipur-ajmer-04",
+          "url": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/jaipur/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-14T08:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 401,
+        "state_id": 4,
+        "name": "Jaipur",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 4,
+        "name": "Rajasthan",
+        "code": "RJ",
+        "is_active": true
+      },
+      "created_at": "2026-11-14T08:00:00.000Z",
+      "updated_at": "2026-11-15T10:00:00.000Z",
+      "published_at": "2026-11-15T10:00:00.000Z"
+    },
+    {
+      "id": "prop-blr-devanahalli-05",
+      "slug": "devanahalli-highway-facing-industrial-land-bangalore-9902",
+      "owner_id": "broker-103",
+      "title": "Devanahalli Highway Facing Industrial & Warehouse Land (1 Acre)",
+      "description": "Strategic 1-acre industrial plot on the NH-44 highway corridor in Devanahalli, North Bangalore. KIADB conversion approved. Ideal for logistics warehouse, manufacturing facility, or commercial depot. Heavy container vehicle access with 80ft road frontage. 15 minutes drive to Kempegowda International Airport.",
+      "listing_intent": "sell",
+      "category": "commercial",
+      "property_type": "industrial_land",
+      "price": 32000000,
+      "price_negotiable": true,
+      "price_per_unit": 735,
+      "area": 43560,
+      "area_unit": "sqft",
+      "length": 220,
+      "breadth": 198,
+      "address": "NH-44 Highway Service Road, Devanahalli Rural",
+      "pin_code": "562110",
+      "road_width": 80,
+      "road_access": "pucca",
+      "facing_direction": "east",
+      "ownership_type": "freehold",
+      "is_corner_plot": false,
+      "is_on_main_road": true,
+      "nearby_landmarks": [
+        "Kempegowda International Airport (15 mins)",
+        "Devanahalli Aerospace SEZ",
+        "Hardware Park North Bangalore"
+      ],
+      "amenities": [
+        "Heavy Vehicle Turning Access",
+        "HT Industrial Power Connection",
+        "KIADB Zoning Certified",
+        "High Compound Perimeter Wall",
+        "Direct NH-44 Highway Touch"
+      ],
+      "seller_name": "Apex Land & Infrastructure Advisors",
+      "seller_phone": "+91 98450 33881",
+      "seller_email": "deals@apexlands.com",
+      "seller_category": "broker",
+      "status": "approved",
+      "is_featured": true,
+      "is_admin_managed": false,
+      "is_verified": true,
+      "view_count": 613,
+      "enquiry_count": 31,
+      "favourite_count": 48,
+      "images": [
+        {
+          "id": "img-blr-1",
+          "property_id": "prop-blr-devanahalli-05",
+          "url": "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/blr/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-15T11:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 701,
+        "state_id": 6,
+        "name": "Bangalore",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 6,
+        "name": "Karnataka",
+        "code": "KA",
+        "is_active": true
+      },
+      "created_at": "2026-11-15T11:00:00.000Z",
+      "updated_at": "2026-11-19T10:30:44.338Z",
+      "published_at": "2026-11-16T12:00:00.000Z"
+    },
+    {
+      "id": "prop-pending-lko-06",
+      "slug": "kisan-path-highway-touch-corner-residential-plot-6610",
+      "owner_id": "client-owner-203",
+      "title": "Kisan Path Highway Touch Corner Residential Plot (1,500 Sq.Ft)",
+      "description": "Newly submitted by direct landowner Sunil Kumar. 1,500 sq.ft corner plot facing 30ft and 25ft roads right off Kisan Path Ring Road, Lucknow. Clear title registry papers submitted for admin verification. Electricity and street lights available. Awaiting admin review.",
+      "listing_intent": "sell",
+      "category": "residential_plot",
+      "property_type": "plot",
+      "price": 2700000,
+      "price_negotiable": true,
+      "price_per_unit": 1800,
+      "area": 1500,
+      "area_unit": "sqft",
+      "length": 50,
+      "breadth": 30,
+      "address": "Kisan Path Ring Road, Near Sultanpur Highway Crossing",
+      "pin_code": "226028",
+      "road_width": 30,
+      "road_access": "pucca",
+      "facing_direction": "east",
+      "ownership_type": "freehold",
+      "is_corner_plot": true,
+      "is_on_main_road": true,
+      "nearby_landmarks": [
+        "Kisan Path Ring Road Flyover",
+        "Purvanchal Expressway Entry Point",
+        "Gosainganj Market"
+      ],
+      "amenities": [
+        "Two Side Road Corner",
+        "Direct Highway Access",
+        "Electricity Poles Erected"
+      ],
+      "seller_name": "Sunil Kumar",
+      "seller_phone": "+91 91200 44556",
+      "seller_email": "sunil.kumar.lko@gmail.com",
+      "seller_category": "owner",
+      "status": "pending_review",
+      "is_featured": false,
+      "is_admin_managed": false,
+      "is_verified": false,
+      "view_count": 12,
+      "enquiry_count": 0,
+      "favourite_count": 1,
+      "images": [
+        {
+          "id": "img-pending-1",
+          "property_id": "prop-pending-lko-06",
+          "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/pending/1.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-18T18:00:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 501,
+        "state_id": 1,
+        "name": "Lucknow",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 1,
+        "name": "Uttar Pradesh",
+        "code": "UP",
+        "is_active": true
+      },
+      "created_at": "2026-11-18T18:00:00.000Z",
+      "updated_at": "2026-11-18T18:00:00.000Z"
+    },
+    {
+      "id": "prop-pending-noida-07",
+      "slug": "noida-sector-150-express-commercial-sco-plot-3321",
+      "owner_id": "broker-104",
+      "title": "Noida Sector 150 Express Commercial SCO Showroom Plot (3,000 Sq.Ft)",
+      "description": "Submitted by NCR Prime Realty (RERA Registered Broker). Prime commercial showroom land in high-density residential sector 150 Noida. 45-meter wide main sector road frontage. Excellent for banking branch, retail hypermarket, or corporate franchise. Submitted for admin approval.",
+      "listing_intent": "sell",
+      "category": "commercial",
+      "property_type": "showroom",
+      "price": 21000000,
+      "price_negotiable": true,
+      "price_per_unit": 7000,
+      "area": 3000,
+      "area_unit": "sqft",
+      "length": 60,
+      "breadth": 50,
+      "address": "Commercial Block B, Sector 150 Noida",
+      "pin_code": "201310",
+      "road_width": 150,
+      "road_access": "pucca",
+      "facing_direction": "north-east",
+      "ownership_type": "freehold",
+      "is_corner_plot": true,
+      "is_on_main_road": true,
+      "nearby_landmarks": [
+        "Noida - Greater Noida Expressway (3 mins)",
+        "Sector 148 Aqua Line Metro Station",
+        "Shaheed Bhagat Singh Sports City"
+      ],
+      "amenities": [
+        "150ft Wide Main Sector Road",
+        "Dedicated Commercial Parking",
+        "Power Backup Substation",
+        "High Footfall Tech Corridor"
+      ],
+      "seller_name": "NCR Prime Realty Consultants",
+      "seller_phone": "+91 99112 88776",
+      "seller_email": "contact@ncrprimerealty.com",
+      "seller_category": "broker",
+      "status": "pending_review",
+      "is_featured": false,
+      "is_admin_managed": false,
+      "is_verified": false,
+      "view_count": 8,
+      "enquiry_count": 0,
+      "favourite_count": 0,
+      "images": [
+        {
+          "id": "img-pending-2",
+          "property_id": "prop-pending-noida-07",
+          "url": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1000&auto=format&fit=crop&q=80",
+          "storage_path": "properties/pending/2.jpg",
+          "is_cover": true,
+          "sort_order": 1,
+          "created_at": "2026-11-18T19:30:00.000Z"
+        }
+      ],
+      "city": {
+        "id": 502,
+        "state_id": 1,
+        "name": "Noida",
+        "is_popular": true,
+        "is_active": true
+      },
+      "state": {
+        "id": 1,
+        "name": "Uttar Pradesh",
+        "code": "UP",
+        "is_active": true
+      },
+      "created_at": "2026-11-18T19:30:00.000Z",
+      "updated_at": "2026-11-18T19:30:00.000Z"
+    }
+  ],
   "profiles": [
     {
       "id": "admin-1",
@@ -17,19 +547,19 @@
   "enquiries": [],
   "audit_logs": [
     {
-      "id": "audit-50c457a2-b78d-444f-94ce-b7b37218a389",
+      "id": "audit-fd89ba2a-eb0e-4aad-8002-3c665a8cb17d",
       "actor_id": "admin-1",
       "action": "property_create",
       "target_type": "property",
-      "target_id": "prop-905bb0ad-ad81-424d-bde1-f6472ce2e2bf",
+      "target_id": "prop-f29976ee-980c-4f16-94b4-c5394544139b",
       "details": {
-        "title": "Yamuna Expressway Commercial Corner Plot"
+        "title": "Automated Test Broker Land 200 Sq.Yd in Lucknow"
       },
-      "created_at": "2026-10-30T18:13:31.758Z"
+      "created_at": "2026-11-19T05:01:33.804Z"
     }
   ],
   "site_settings": {
-    "brand_name": "Sasta Plots",
+    "brand_name": "SastaPlots",
     "contact_email": "support@sastaplots.com",
     "contact_phone": "+91 98765 43210",
     "maintenance_mode": false

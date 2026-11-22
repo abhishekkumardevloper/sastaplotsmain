@@ -51,82 +51,10 @@ export const AdminFAQsPage: React.FC = () => {
     queryFn: async () => {
       try {
         const res = await api.get('/admin/faqs')
-        return res.data
+        return res.data?.data || res.data || []
       } catch (err) {
-        console.warn('Fallback admin FAQs mock:', err)
-        const mockFaqs: FAQ[] = [
-          {
-            id: 'faq-1',
-            category: 'listing',
-            question: 'How do I post a property on Sasta Plots?',
-            answer:
-              'Click "Post Property" in the navigation, fill in your property details across the 7 steps, upload photos, and submit. Your listing will be reviewed by our admin team within 24-48 hours.',
-            sort_order: 1,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-          {
-            id: 'faq-2',
-            category: 'listing',
-            question: 'How long does property approval take?',
-            answer:
-              'Our verification team verifies title documents and coordinates within 24-48 hours on business days. You will receive an SMS and email notification once live.',
-            sort_order: 2,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-          {
-            id: 'faq-3',
-            category: 'listing',
-            question: 'Why was my listing rejected or marked for changes?',
-            answer:
-              'Listings can be rejected for low-resolution photos, boundary disputes, missing seller contact numbers, or incomplete land registration details. Feedback is always provided in the admin notification.',
-            sort_order: 3,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-          {
-            id: 'faq-4',
-            category: 'buying',
-            question: 'How do I contact a seller directly?',
-            answer:
-              'Open the plot listing page and click "Send Enquiry" or call the seller number directly. You must verify your mobile number to unlock verified owner contacts.',
-            sort_order: 1,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-          {
-            id: 'faq-5',
-            category: 'buying',
-            question: 'Are all plots verified by authority?',
-            answer:
-              'Listings with the green "Admin Verified" badge have had their ownership deeds and survey boundaries reviewed by our moderation team. Always carry out personal due diligence.',
-            sort_order: 2,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-          {
-            id: 'faq-6',
-            category: 'account',
-            question: 'How do I update my seller profile and RERA number?',
-            answer:
-              'Go to Account Settings > Profile, enter your registered business name and RERA registration ID, and click Save Changes.',
-            sort_order: 1,
-            is_active: true,
-            is_chatbot_knowledge: false,
-          },
-          {
-            id: 'faq-7',
-            category: 'general',
-            question: 'Is listing on Sasta Plots free?',
-            answer:
-              'Basic listing of up to 5 properties is free. Premium plans with spotlight badges and homepage visibility are also available.',
-            sort_order: 1,
-            is_active: true,
-            is_chatbot_knowledge: true,
-          },
-        ]
-        return mockFaqs
+        console.error('Failed to load admin FAQs:', err)
+        return []
       }
     },
   })

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { updateProperty } from '@/lib/serverStore'
+import { updateProperty, createAuditLog } from '@/lib/serverStore'
 
 export async function PUT(
   request: NextRequest,
@@ -26,6 +26,17 @@ export async function PUT(
     if (!updated) {
       return NextResponse.json({ success: false, error: 'Property not found' }, { status: 404 })
     }
+
+    await createAuditLog({
+      action: `property_${status}`,
+      target_type: 'property',
+      target_id: id,
+      details: {
+        title: updated.title,
+        status,
+        reason: reason || undefined,
+      },
+    })
 
     return NextResponse.json({
       success: true,

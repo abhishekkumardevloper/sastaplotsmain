@@ -7,14 +7,16 @@ export async function GET(request: NextRequest) {
 
     const status = searchParams.get('status') || 'all'
     const category = searchParams.get('category') || undefined
+    const seller_category = searchParams.get('seller_category') || undefined
     const q = searchParams.get('q') || undefined
     const sort = searchParams.get('sort') || undefined
     const page = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : 1
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!, 10) : 20
 
     const { data, total } = await getProperties({
-      status: status === 'all' ? undefined : status,
+      status: status || 'all',
       category: category === 'all' ? undefined : category,
+      seller_category: seller_category === 'all' ? undefined : seller_category,
       q,
       sort,
       page,

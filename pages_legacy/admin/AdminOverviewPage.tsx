@@ -54,7 +54,7 @@ export const AdminOverviewPage: React.FC = () => {
     queryFn: async () => {
       try {
         const res = await api.get('/admin/dashboard')
-        return res.data
+        return res.data?.data || res.data
       } catch (err) { console.error("Admin overview error:", err); return { stats: { total_listings: 0, published_listings: 0, pending_approvals: 0, rejected_listings: 0, suspended_listings: 0, total_users: 1, owners_agents: 0, new_enquiries: 0, listings_today: 0, recent_activity: [] }, recent_activity: [], pending_listings: [], pending_properties: [] }; }
     },
     staleTime: 60 * 1000,

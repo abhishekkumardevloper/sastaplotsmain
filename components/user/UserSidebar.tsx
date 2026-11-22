@@ -15,8 +15,8 @@ import {
   ShieldCheck,
   Clock,
   AlertTriangle,
+  ExternalLink,
   ChevronRight,
-  ExternalLink
 } from 'lucide-react'
 import { useAuthStore, useNotificationStore } from '@/store/auth'
 import { cn } from '@/lib/utils'
@@ -24,9 +24,10 @@ import { cn } from '@/lib/utils'
 interface UserSidebarProps {
   onClose?: () => void
   className?: string
+  listingCount?: number
 }
 
-export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) => {
+export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className, listingCount }) => {
   const navigate = useNavigate()
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
@@ -49,15 +50,16 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
       label: 'My Listings',
       to: '/dashboard/listings',
       icon: Home,
+      badge: listingCount && listingCount > 0 ? listingCount : undefined,
     },
     {
-      label: 'Add Property',
+      label: 'Post New Property',
       to: '/post-property',
       icon: PlusCircle,
       highlight: true,
     },
     {
-      label: 'My Favourites',
+      label: 'Saved / Favourites',
       to: '/dashboard/favourites',
       icon: Heart,
     },
@@ -73,7 +75,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
       badge: unreadCount > 0 ? unreadCount : undefined,
     },
     {
-      label: 'Profile & Verification',
+      label: 'Profile & KYC',
       to: '/dashboard/profile',
       icon: UserCheck,
     },
@@ -89,14 +91,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
     switch (status) {
       case 'verified':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
             <ShieldCheck className="w-3 h-3 text-green-600" />
             Verified Seller
           </span>
         )
       case 'pending':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
             <Clock className="w-3 h-3 text-amber-600" />
             Verification Pending
           </span>
@@ -106,10 +108,10 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
           <Link
             to="/dashboard/profile"
             onClick={onClose}
-            className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-600 bg-gray-100 hover:bg-orange-50 hover:text-[#F47B20] px-2 py-0.5 rounded-full transition-colors"
+            className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-600 bg-gray-100 hover:bg-orange-50 hover:text-[#F47B20] px-2 py-0.5 rounded-full transition-colors"
           >
             <AlertTriangle className="w-3 h-3 text-orange-500" />
-            Get Verified
+            Complete KYC
           </Link>
         )
     }
@@ -128,120 +130,153 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
   return (
     <aside
       className={cn(
-        'w-64 bg-white border-r border-[#EAEAEA] flex flex-col h-full select-none',
+        'w-64 bg-white border-r border-gray-100 flex flex-col h-full select-none shadow-sm',
         className
       )}
     >
-      {/* Brand & User Card */}
-      <div className="p-4 border-b border-[#EAEAEA]">
+      {/* Brand Logo */}
+      <div className="px-5 pt-5 pb-4 border-b border-gray-100">
         <Link
           to="/"
-          className="flex items-center gap-2.5 px-2 py-1.5 mb-4 group"
+          className="flex items-center gap-2.5 group mb-5"
           onClick={onClose}
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#E96512] to-[#F47B20] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#E96512] to-[#F47B20] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
             <Building2 className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-lg font-bold font-['Poppins'] text-[#202124]">
+            <span className="text-lg font-black font-['Poppins'] text-[#1A1A2E]">
               Sasta<span className="text-[#F47B20]">Plots</span>
             </span>
-            <span className="block text-[9px] uppercase font-semibold text-[#727272] tracking-wider">
-              User Portal
+            <span className="block text-[9px] uppercase font-bold text-gray-400 tracking-widest leading-none">
+              Seller Portal
             </span>
           </div>
         </Link>
 
-        {/* Profile Snapshot */}
-        <div className="bg-[#FFF8F2] rounded-xl p-3 border border-[#FDE8D2] flex items-center gap-3">
-          <div className="relative">
-            {user?.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.full_name || 'User avatar'}
-                className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-xs"
-              />
-            ) : (
-              <div className="w-11 h-11 rounded-full bg-[#F47B20] text-white font-bold text-sm flex items-center justify-center border-2 border-white shadow-xs">
-                {getInitials(user?.full_name)}
-              </div>
-            )}
-            {user?.verification_status === 'verified' && (
-              <div className="absolute -bottom-0.5 -right-0.5 bg-green-500 rounded-full p-0.5 text-white ring-2 ring-white">
-                <ShieldCheck className="w-2.5 h-2.5" />
-              </div>
-            )}
-          </div>
+        {/* User Profile Card */}
+        <div className="bg-gradient-to-br from-[#FFF8F2] to-orange-50 rounded-2xl p-3 border border-orange-100">
+          <div className="flex items-center gap-3">
+            <div className="relative flex-shrink-0">
+              {user?.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt={user.full_name || 'User avatar'}
+                  className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#E96512] to-[#F47B20] text-white font-black text-sm flex items-center justify-center border-2 border-white shadow-sm">
+                  {getInitials(user?.full_name)}
+                </div>
+              )}
+              {user?.verification_status === 'verified' && (
+                <div className="absolute -bottom-0.5 -right-0.5 bg-green-500 rounded-full p-0.5 text-white ring-2 ring-white">
+                  <ShieldCheck className="w-2.5 h-2.5" />
+                </div>
+              )}
+            </div>
 
-          <div className="min-w-0 flex-1">
-            <h4 className="text-sm font-semibold text-[#202124] truncate leading-tight">
-              {user?.full_name || 'My Account'}
-            </h4>
-            <p className="text-xs text-[#727272] truncate mb-1.5">
-              {user?.email || 'Logged in user'}
-            </p>
-            <div>{getVerificationBadge()}</div>
+            <div className="min-w-0 flex-1">
+              <h4 className="text-sm font-bold text-[#1A1A2E] truncate leading-tight">
+                {user?.full_name || 'My Account'}
+              </h4>
+              <p className="text-[11px] text-gray-500 truncate mb-1.5 leading-tight">
+                {user?.email || 'User account'}
+              </p>
+              <div>{getVerificationBadge()}</div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex-1 overflow-y-auto p-3 space-y-1 scrollbar-thin">
-        {navItems.map((item) => {
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-0.5 scrollbar-thin">
+        <p className="text-[9px] uppercase font-black text-gray-400 tracking-widest px-3 pt-1 pb-2">
+          Main Menu
+        </p>
+
+        {navItems.map((item, idx) => {
           const Icon = item.icon
+          const showDividerBefore = idx === 2 // Before "Post New Property"
           return (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              onClick={onClose}
-              className={({ isActive }) =>
-                cn(
-                  'flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group',
-                  item.highlight && !isActive
-                    ? 'bg-gradient-to-r from-orange-50 to-amber-50 text-[#F47B20] border border-orange-200/60 font-semibold'
-                    : '',
-                  isActive
-                    ? 'bg-[#FFF0E0] text-[#F47B20] font-semibold shadow-xs'
-                    : 'text-[#505050] hover:bg-[#FFF8F2] hover:text-[#F47B20]'
-                )
-              }
-            >
-              <div className="flex items-center gap-3">
-                <Icon
-                  className={cn(
-                    'w-4 h-4 transition-transform group-hover:scale-110',
-                    item.highlight ? 'text-[#F47B20]' : ''
-                  )}
-                />
-                <span>{item.label}</span>
-              </div>
-
-              {item.badge !== undefined && (
-                <span className="bg-[#F47B20] text-white text-[11px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
-                  {item.badge}
-                </span>
+            <React.Fragment key={item.to}>
+              {showDividerBefore && (
+                <div className="pt-2 pb-1">
+                  <div className="border-t border-gray-100" />
+                </div>
               )}
+              <NavLink
+                to={item.to}
+                end={item.end}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group',
+                    item.highlight && !isActive
+                      ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold shadow-sm hover:shadow-md hover:from-orange-600 hover:to-amber-600'
+                      : '',
+                    !item.highlight && isActive
+                      ? 'bg-orange-50 text-[#F47B20] font-bold'
+                      : '',
+                    !item.highlight && !isActive
+                      ? 'text-gray-600 hover:bg-gray-50 hover:text-[#F47B20]'
+                      : ''
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={cn(
+                          'w-8 h-8 rounded-lg flex items-center justify-center transition-all',
+                          item.highlight
+                            ? 'bg-white/20 text-white'
+                            : isActive
+                            ? 'bg-[#F47B20] text-white shadow-sm'
+                            : 'bg-gray-100 text-gray-500 group-hover:bg-orange-50 group-hover:text-[#F47B20]'
+                        )}
+                      >
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className={item.highlight ? 'text-white font-bold' : ''}>{item.label}</span>
+                    </div>
 
-              {item.highlight && !item.badge && (
-                <span className="text-[10px] uppercase font-bold text-[#F47B20] bg-orange-100 px-1.5 py-0.5 rounded">
-                  Fast
-                </span>
-              )}
-            </NavLink>
+                    <div className="flex items-center gap-1.5">
+                      {item.badge !== undefined && (
+                        <span
+                          className={cn(
+                            'text-[11px] font-black px-1.5 py-0.5 rounded-full min-w-[20px] text-center',
+                            item.highlight
+                              ? 'bg-white/30 text-white'
+                              : 'bg-[#F47B20] text-white'
+                          )}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                      {!item.badge && !item.highlight && isActive && (
+                        <ChevronRight className="w-3.5 h-3.5 text-[#F47B20]" />
+                      )}
+                    </div>
+                  </>
+                )}
+              </NavLink>
+            </React.Fragment>
           )
         })}
       </nav>
 
-      {/* Quick Public Site Link & Logout footer */}
-      <div className="p-3 border-t border-[#EAEAEA] space-y-1">
+      {/* Footer */}
+      <div className="p-3 border-t border-gray-100 space-y-1">
         <Link
           to="/"
-          className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-medium text-[#727272] hover:bg-gray-100 hover:text-[#202124] transition-colors"
+          onClick={onClose}
+          className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-[#1A1A2E] transition-colors"
         >
           <span className="flex items-center gap-2">
-            <Building2 className="w-3.5 h-3.5" />
-            Explore Sasta Plots
+            <Building2 className="w-3.5 h-3.5 text-[#F47B20]" />
+            Explore SastaPlots
           </span>
           <ExternalLink className="w-3 h-3 text-gray-400" />
         </Link>
@@ -249,9 +284,11 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ onClose, className }) 
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-medium text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
         >
-          <LogOut className="w-4 h-4" />
+          <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center">
+            <LogOut className="w-3.5 h-3.5 text-red-500" />
+          </div>
           <span>Sign Out</span>
         </button>
       </div>

@@ -47,64 +47,20 @@ const ACTION_COLORS: Record<string, { bg: string; text: string; label: string }>
   admin_login: { bg: 'bg-slate-50 border-slate-200', text: 'text-slate-700', label: 'Admin Login' },
 }
 
-const FALLBACK_LOGS: AuditLog[] = [
-  {
-    id: '1',
-    actor: { email: 'admin@sastaplots.com', full_name: 'Super Admin' },
-    action: 'property_approve',
-    target_type: 'property',
-    target_id: 'prop-101',
-    details: { title: 'Prime Residential Plot in Gomti Nagar', category: 'residential_plot', price: 4500000 },
-    ip_address: '103.21.124.5',
-    created_at: new Date(Date.now() - 1000 * 60 * 35).toISOString()
-  },
-  {
-    id: '2',
-    actor: { email: 'admin@sastaplots.com', full_name: 'Super Admin' },
-    action: 'settings_update',
-    target_type: 'settings',
-    target_id: 'hero',
-    details: { updated_keys: ['headline', 'subtext'] },
-    ip_address: '103.21.124.5',
-    created_at: new Date(Date.now() - 1000 * 60 * 120).toISOString()
-  },
-  {
-    id: '3',
-    actor: { email: 'moderator@sastaplots.com', full_name: 'Mod Desk' },
-    action: 'property_reject',
-    target_type: 'property',
-    target_id: 'prop-88',
-    details: { reason: 'Incomplete documentation and blurry photos of boundary wall.' },
-    ip_address: '49.36.110.12',
-    created_at: new Date(Date.now() - 1000 * 60 * 360).toISOString()
-  },
-  {
-    id: '4',
-    actor: { email: 'admin@sastaplots.com', full_name: 'Super Admin' },
-    action: 'admin_login',
-    target_type: 'auth',
-    target_id: 'admin-01',
-    details: { method: 'password', status: 'success' },
-    ip_address: '103.21.124.5',
-    created_at: new Date(Date.now() - 1000 * 60 * 600).toISOString()
-  }
-]
-
 export const AdminAuditLogsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedAction, setSelectedAction] = useState('all')
 
-  const { data: logs = FALLBACK_LOGS, isLoading, refetch, isFetching } = useQuery<AuditLog[]>({
+  const { data: logs = [], isLoading, refetch, isFetching } = useQuery<AuditLog[]>({
     queryKey: ['admin-audit-logs'],
     queryFn: async () => {
       try {
         const res = await api.get('/admin/audit-logs')
-        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-          return res.data
-        }
-        return FALLBACK_LOGS
+        const items = res.data?.data || res.data
+        return Array.isArray(items) ? items : []
       } catch (err) {
-        return FALLBACK_LOGS
+        console.error('Failed to load audit logs:', err)
+        return []
       }
     }
   })

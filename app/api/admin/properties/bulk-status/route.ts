@@ -4,11 +4,12 @@ import { updateProperty } from '@/lib/serverStore'
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const { property_ids, status, reason } = body
+    const ids = body.property_ids || body.ids
+    const { status, reason } = body
 
-    if (!Array.isArray(property_ids) || property_ids.length === 0 || !status) {
+    if (!Array.isArray(ids) || ids.length === 0 || !status) {
       return NextResponse.json(
-        { success: false, error: 'property_ids array and status are required' },
+        { success: false, error: 'property_ids or ids array and status are required' },
         { status: 400 }
       )
     }
@@ -22,7 +23,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const results = await Promise.all(
-      property_ids.map((id: string) => updateProperty(id, payload))
+      ids.map((id: string) => updateProperty(id, payload))
     )
 
     return NextResponse.json({

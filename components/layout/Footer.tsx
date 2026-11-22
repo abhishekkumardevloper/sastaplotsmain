@@ -1,66 +1,103 @@
 'use client'
-import React from 'react'
+
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   MapPin,
   Phone,
   Mail,
   ShieldCheck,
-  Heart,
-  ExternalLink,
+  CheckCircle2,
+  Send,
+  Building2,
+  ArrowRight,
+  Award,
 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState('')
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address')
+      return
+    }
+    toast.success('Subscribed to plot market price alerts!')
+    setEmail('')
+  }
+
   return (
-    <footer className="bg-[#202124] text-gray-300 pt-16 pb-12 border-t border-gray-800">
+    <footer className="bg-[#0B1120] text-slate-300 pt-16 pb-12 border-t border-slate-800">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-gray-800">
-          {/* Brand Col */}
+        {/* Top Trust Ribbon */}
+        <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 mb-12 border border-slate-700/60 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-[#F47B20] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="text-base font-bold text-white">
+                100% Admin-Reviewed & Verified Land Marketplace
+              </h4>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Every residential, commercial, and agricultural plot goes through manual admin approval before publishing.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/post-property"
+            className="btn-primary text-xs sm:text-sm py-2.5 px-5 shrink-0 shadow-md flex items-center gap-2"
+          >
+            <span>List Plot as Owner / Broker</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {/* 5-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-slate-800">
+          {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="inline-block py-1.5 px-3 bg-white rounded-xl shadow-xs max-w-[200px]">
               <img
                 src="/logo.png"
-                alt="Sasta Plots - Plots Made Simple"
-                className="h-11 w-auto object-contain"
+                alt="SastaPlots - Plots Made Simple"
+                className="h-10 w-auto object-contain"
               />
             </Link>
-            <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
-              India's dedicated real estate marketplace for verified residential plots, agricultural farm lands, and commercial spaces. Discover affordable property with zero brokerage.
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
+              India's premier dedicated real estate marketplace for verified residential plots, agricultural farm lands, and commercial spaces. Connect directly with genuine landowners and licensed brokers.
             </p>
-            <div className="space-y-2 text-xs text-gray-400">
+            <div className="space-y-2 text-xs text-slate-400">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#F47B20]" />
-                <a href="mailto:contact@sastaplots.com" className="hover:text-white transition-colors">
-                  contact@sastaplots.com
+                <a href="mailto:support@sastaplots.com" className="hover:text-white transition-colors">
+                  support@sastaplots.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#F47B20]" />
                 <a href="tel:+919876543210" className="hover:text-white transition-colors">
-                  +91 98765 43210
+                  +91 98765 43210 (Mon - Sat, 9 AM - 7 PM)
                 </a>
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#F47B20] shrink-0 mt-0.5" />
-                <span>DLF Cyber City, Gurugram & Connaught Place, New Delhi, India</span>
+                <span>Sector 62 Noida, Shaheed Path Lucknow & Connaught Place New Delhi, India</span>
               </div>
             </div>
           </div>
 
-          {/* Quick Browse Col */}
+          {/* Col 2: Categories */}
           <div>
-            <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">
-              Explore Properties
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 border-l-2 border-[#F47B20] pl-2.5">
+              Explore Land
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link to="/buy" className="hover:text-[#F47B20] transition-colors">
                   Plots for Sale
-                </Link>
-              </li>
-              <li>
-                <Link to="/rent" className="hover:text-[#F47B20] transition-colors">
-                  Properties for Rent
                 </Link>
               </li>
               <li>
@@ -70,112 +107,110 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/agricultural-land" className="hover:text-[#F47B20] transition-colors">
-                  Agricultural Land
+                  Agricultural Farmland
                 </Link>
               </li>
               <li>
                 <Link to="/commercial" className="hover:text-[#F47B20] transition-colors">
-                  Commercial Properties
+                  Commercial SCO & Plots
+                </Link>
+              </li>
+              <li>
+                <Link to="/search?is_verified=true" className="hover:text-[#F47B20] transition-colors">
+                  Admin Verified Plots
                 </Link>
               </li>
               <li>
                 <Link to="/locations" className="hover:text-[#F47B20] transition-colors">
-                  All Locations & Cities
+                  All 48+ Cities Directory
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Popular Cities Col */}
+          {/* Col 3: Popular Corridors */}
           <div>
-            <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">
-              Popular Cities
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 border-l-2 border-[#F47B20] pl-2.5">
+              Top Corridors
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link to="/buy?city=Noida" className="hover:text-[#F47B20] transition-colors">
-                  Plots in Noida
+                <Link to="/search?q=Noida" className="hover:text-[#F47B20] transition-colors">
+                  Plots in Noida & Yamuna Exp
                 </Link>
               </li>
               <li>
-                <Link to="/buy?city=Lucknow" className="hover:text-[#F47B20] transition-colors">
-                  Plots in Lucknow
+                <Link to="/search?q=Lucknow" className="hover:text-[#F47B20] transition-colors">
+                  Plots in Lucknow (Kisan Path)
                 </Link>
               </li>
               <li>
-                <Link to="/buy?city=Pune" className="hover:text-[#F47B20] transition-colors">
-                  Farmland in Pune
+                <Link to="/search?q=Jaipur" className="hover:text-[#F47B20] transition-colors">
+                  Plots in Jaipur (Ajmer Road)
                 </Link>
               </li>
               <li>
-                <Link to="/buy?city=Jaipur" className="hover:text-[#F47B20] transition-colors">
-                  Plots in Jaipur
+                <Link to="/search?q=Pune" className="hover:text-[#F47B20] transition-colors">
+                  Farmland in Pune & Hinjewadi
                 </Link>
               </li>
               <li>
-                <Link to="/buy?city=Bengaluru" className="hover:text-[#F47B20] transition-colors">
-                  Plots in Bengaluru
+                <Link to="/search?q=Bangalore" className="hover:text-[#F47B20] transition-colors">
+                  Plots in Bangalore (Sarjapur)
                 </Link>
               </li>
               <li>
-                <Link to="/buy?city=Delhi" className="hover:text-[#F47B20] transition-colors">
-                  Commercial in Delhi
+                <Link to="/search?q=Hyderabad" className="hover:text-[#F47B20] transition-colors">
+                  Plots in Hyderabad (ORR)
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Legal & Support Col */}
+          {/* Col 4: Newsletter & Legal */}
           <div>
-            <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-4">
-              Support & Legal
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 border-l-2 border-[#F47B20] pl-2.5">
+              Price Alerts
             </h4>
-            <ul className="space-y-2.5 text-xs">
-              <li>
-                <Link to="/about" className="hover:text-[#F47B20] transition-colors">
-                  About Sasta Plots
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-[#F47B20] transition-colors">
-                  Contact Support
-                </Link>
-              </li>
-              <li>
-                <Link to="/faqs" className="hover:text-[#F47B20] transition-colors">
-                  FAQs & Knowledge Base
-                </Link>
-              </li>
-              <li>
-                <Link to="/listing-guidelines" className="hover:text-[#F47B20] transition-colors">
-                  Listing Guidelines
-                </Link>
-              </li>
-              <li>
-                <Link to="/privacy" className="hover:text-[#F47B20] transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="hover:text-[#F47B20] transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
+            <p className="text-xs text-slate-400 mb-3">
+              Get notified of new admin-approved plots & verified corridor discounts.
+            </p>
+            <form onSubmit={handleSubscribe} className="space-y-2">
+              <input
+                type="email"
+                placeholder="Enter email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 text-xs px-3 py-2 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#F47B20]"
+              />
+              <button
+                type="submit"
+                className="w-full py-2 px-3 rounded-xl bg-[#F47B20] hover:bg-[#E96512] text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Send className="w-3 h-3" />
+                <span>Subscribe Free</span>
+              </button>
+            </form>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        {/* Bottom Bar & Legal Disclaimer */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
-            &copy; {new Date().getFullYear()} Sasta Plots Marketplace India Pvt Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} SastaPlots Marketplace India Pvt Ltd. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <Link to="/privacy" className="hover:text-gray-300">Privacy</Link>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400">
+            <Link to="/about" className="hover:text-[#F47B20]">About Us</Link>
             <span>•</span>
-            <Link to="/terms" className="hover:text-gray-300">Terms</Link>
+            <Link to="/contact" className="hover:text-[#F47B20]">Contact</Link>
             <span>•</span>
-            <Link to="/listing-guidelines" className="hover:text-gray-300">Guidelines</Link>
+            <Link to="/faqs" className="hover:text-[#F47B20]">FAQs</Link>
+            <span>•</span>
+            <Link to="/listing-guidelines" className="hover:text-[#F47B20]">Listing Guidelines</Link>
+            <span>•</span>
+            <Link to="/privacy" className="hover:text-[#F47B20]">Privacy Policy</Link>
+            <span>•</span>
+            <Link to="/terms" className="hover:text-[#F47B20]">Terms of Use</Link>
           </div>
         </div>
       </div>

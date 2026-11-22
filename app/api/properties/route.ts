@@ -8,6 +8,8 @@ export async function GET(request: NextRequest) {
     const intent = searchParams.get('intent') || undefined
     const category = searchParams.get('category') || undefined
     const property_type = searchParams.get('property_type') || undefined
+    const seller_category = searchParams.get('seller_category') || undefined
+    const owner_id = searchParams.get('owner_id') || undefined
     const status = searchParams.get('status') || undefined
     const q = searchParams.get('q') || undefined
     const sort = searchParams.get('sort') || undefined
@@ -24,6 +26,8 @@ export async function GET(request: NextRequest) {
       intent,
       category,
       property_type,
+      seller_category,
+      owner_id,
       status,
       q,
       sort,

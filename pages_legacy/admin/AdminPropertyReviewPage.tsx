@@ -77,196 +77,30 @@ export const AdminPropertyReviewPage: React.FC = () => {
     queryFn: async () => {
       try {
         const res = await api.get(`/admin/properties/${id}`)
-        return res.data
+        const prop = res.data?.data || res.data
+        if (prop && prop.id) {
+          return {
+            property: prop,
+            documents: prop.documents || [],
+            history: prop.status_history || [
+              {
+                id: 'h-1',
+                property_id: prop.id,
+                old_status: 'draft',
+                new_status: prop.status || 'pending_review',
+                notes: 'Submitted for verification',
+                actor_name: prop.seller_name || 'Seller',
+                created_at: prop.created_at,
+              },
+            ],
+            notes: prop.admin_notes || [],
+            seller_properties: [],
+          }
+        }
+        throw new Error('Property not found')
       } catch (err) {
-        console.warn('Fallback single property review data:', err)
-        // Fallback realistic property review
-        const mockProp: Property = {
-          id: id || 'prop-101',
-          slug: 'prime-corner-plot-sector-62-noida',
-          title: 'Prime 300 sq.yd Corner Plot in Sector 62',
-          description:
-            'Exceptional east-facing freehold corner residential plot located in prime Block B of Sector 62, Noida. Has 60 feet wide paved road on front and 30 feet wide road on side. Clear title with registry and mutation complete. Immediate construction permitted by authority with sanctioned map guidelines. Within 500m of Sector 62 Metro Station and major IT parks.',
-          listing_intent: 'sell',
-          category: 'residential_plot',
-          property_type: 'plot',
-          price: 18500000,
-          price_negotiable: true,
-          price_per_unit: 61666,
-          area: 300,
-          area_unit: 'sqyd',
-          length: 60,
-          breadth: 45,
-          road_width: 60,
-          road_access: 'pucca',
-          facing_direction: 'northeast',
-          ownership_type: 'freehold',
-          is_corner_plot: true,
-          is_on_main_road: true,
-          status: 'pending_review',
-          is_featured: false,
-          is_admin_managed: false,
-          is_verified: false,
-          view_count: 38,
-          enquiry_count: 2,
-          favourite_count: 5,
-          seller_name: 'Rajesh Verma',
-          seller_phone: '+91 98112 34567',
-          seller_email: 'rajesh.verma@gmail.com',
-          seller_category: 'owner',
-          address: 'Plot B-44, Sector 62, Noida, Gautam Buddha Nagar, Uttar Pradesh',
-          pin_code: '201309',
-          latitude: 28.628,
-          longitude: 77.3649,
-          nearby_landmarks: [
-            'Sector 62 Metro Station (450m)',
-            'Fortis Hospital (1.2 km)',
-            'Electronic City Noida (800m)',
-            'DPS School (1.5 km)',
-          ],
-          amenities: [
-            'Electricity Connection',
-            'Water Supply',
-            'Sewage Line',
-            'Boundary Wall',
-            'Street Lights',
-            'Paved Pucca Road',
-            'Security Guard Post',
-          ],
-          created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          updated_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          images: [
-            {
-              id: 'img-1',
-              property_id: id || 'prop-101',
-              url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1000&q=80',
-              storage_path: 'plots/p1.jpg',
-              is_cover: true,
-              sort_order: 1,
-              created_at: new Date().toISOString(),
-            },
-            {
-              id: 'img-2',
-              property_id: id || 'prop-101',
-              url: 'https://images.unsplash.com/photo-1524813686514-a57563d77d61?w=1000&q=80',
-              storage_path: 'plots/p2.jpg',
-              is_cover: false,
-              sort_order: 2,
-              created_at: new Date().toISOString(),
-            },
-            {
-              id: 'img-3',
-              property_id: id || 'prop-101',
-              url: 'https://images.unsplash.com/photo-1500076656116-558758c991c1?w=1000&q=80',
-              storage_path: 'plots/p3.jpg',
-              is_cover: false,
-              sort_order: 3,
-              created_at: new Date().toISOString(),
-            },
-          ],
-        }
-
-        const mockDocs: PropertyDocument[] = [
-          {
-            id: 'doc-1',
-            property_id: id || 'prop-101',
-            name: 'Registry_SaleDeed_B44.pdf',
-            storage_path: 'docs/doc1.pdf',
-            document_type: 'Sale Deed / Registry',
-            size_bytes: 2450000,
-            is_verified: true,
-            verified_by: 'Staff Admin',
-            verified_at: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
-            created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          },
-          {
-            id: 'doc-2',
-            property_id: id || 'prop-101',
-            name: 'Noida_Authority_Allotment_Letter.pdf',
-            storage_path: 'docs/doc2.pdf',
-            document_type: 'Authority Allotment Letter',
-            size_bytes: 1800000,
-            is_verified: false,
-            created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          },
-          {
-            id: 'doc-3',
-            property_id: id || 'prop-101',
-            name: 'Electricity_Bill_Latest.pdf',
-            storage_path: 'docs/doc3.pdf',
-            document_type: 'Utility Bill (Address Proof)',
-            size_bytes: 920000,
-            is_verified: true,
-            created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          },
-        ]
-
-        const mockHistory: PropertyStatusHistory[] = [
-          {
-            id: 'h-1',
-            property_id: id || 'prop-101',
-            old_status: 'draft',
-            new_status: 'pending_review',
-            reason: 'Submitted by owner for admin verification',
-            created_at: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-          },
-        ]
-
-        const mockNotes: AdminNote[] = [
-          {
-            id: 'n-1',
-            property_id: id || 'prop-101',
-            note: 'Verified ownership name against Registry deed page 3. Allotment letter stamp checked and verified with authority registry portal.',
-            created_at: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
-            author: {
-              id: 'u-admin',
-              full_name: 'Pooja Sharma',
-              email: 'pooja@sastaplots.com',
-              role: 'admin',
-              phone_verified: true,
-              is_active: true,
-              is_email_verified: true,
-              verification_status: 'verified',
-              created_at: '',
-              updated_at: '',
-            },
-          },
-        ]
-
-        const mockSellerProps: Property[] = [
-          {
-            id: 'prop-99',
-            slug: 'sector-62-plot-c21',
-            title: '200 sq.yd Plot Sector 62 Block C',
-            description: 'Residential plot close to market',
-            listing_intent: 'sell',
-            category: 'residential_plot',
-            property_type: 'plot',
-            price: 13000000,
-            price_negotiable: true,
-            area: 200,
-            area_unit: 'sqyd',
-            status: 'approved',
-            is_corner_plot: false,
-            is_on_main_road: false,
-            is_featured: false,
-            is_admin_managed: false,
-            is_verified: true,
-            view_count: 140,
-            enquiry_count: 6,
-            favourite_count: 12,
-            created_at: new Date(Date.now() - 40 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-        ]
-
-        return {
-          property: mockProp,
-          documents: mockDocs,
-          history: mockHistory,
-          notes: mockNotes,
-          seller_properties: mockSellerProps,
-        }
+        console.error('Property review load error:', err)
+        throw err
       }
     },
   })

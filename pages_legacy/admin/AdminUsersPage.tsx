@@ -79,102 +79,10 @@ export const AdminUsersPage: React.FC = () => {
         const res = await api.get('/admin/users', { params })
         return res.data
       } catch (err) {
-        console.warn('Fallback admin users mock:', err)
-        const mockUsers: ExtendedProfile[] = [
-          {
-            id: 'usr-1',
-            email: 'admin@sastaplots.com',
-            full_name: 'Rajesh Kumar (Super Admin)',
-            phone: '+91 98111 00001',
-            phone_verified: true,
-            role: 'super_admin',
-            is_active: true,
-            is_email_verified: true,
-            verification_status: 'verified',
-            properties_count: 14,
-            created_at: new Date(Date.now() - 120 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-          {
-            id: 'usr-2',
-            email: 'amitabh.sen@realtyhub.in',
-            full_name: 'Amitabh Sen',
-            phone: '+91 99990 88776',
-            phone_verified: true,
-            role: 'agent',
-            seller_category: 'agent',
-            rera_number: 'UPRERAAGT2024/0912',
-            company_name: 'RealtyHub Consultants',
-            is_active: true,
-            is_email_verified: true,
-            verification_status: 'verified',
-            properties_count: 22,
-            created_at: new Date(Date.now() - 60 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-          {
-            id: 'usr-3',
-            email: 'anil.singhania@gmail.com',
-            full_name: 'Anil Singhania',
-            phone: '+91 98101 23456',
-            phone_verified: true,
-            role: 'owner',
-            seller_category: 'owner',
-            is_active: true,
-            is_email_verified: true,
-            verification_status: 'verified',
-            properties_count: 3,
-            created_at: new Date(Date.now() - 30 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-          {
-            id: 'usr-4',
-            email: 'dharmender.yadav@yahoo.com',
-            full_name: 'Dharmender Yadav',
-            phone: '+91 98188 33445',
-            phone_verified: false,
-            role: 'owner',
-            seller_category: 'owner',
-            is_active: true,
-            is_email_verified: true,
-            verification_status: 'unverified',
-            properties_count: 1,
-            created_at: new Date(Date.now() - 15 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-          {
-            id: 'usr-5',
-            email: 'spammer101@tempmail.com',
-            full_name: 'Bulk Seller Account',
-            phone: '+91 91234 56789',
-            phone_verified: false,
-            role: 'buyer',
-            is_active: false,
-            is_email_verified: false,
-            verification_status: 'rejected',
-            properties_count: 0,
-            created_at: new Date(Date.now() - 5 * 86400 * 1000).toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-        ]
-
-        let filtered = [...mockUsers]
-        if (searchQuery) {
-          const s = searchQuery.toLowerCase()
-          filtered = filtered.filter(
-            (u) => u.full_name.toLowerCase().includes(s) || u.email.toLowerCase().includes(s)
-          )
-        }
-        if (roleFilter !== 'all') {
-          filtered = filtered.filter((u) => u.role === roleFilter)
-        }
-        if (statusFilter !== 'all') {
-          filtered = filtered.filter((u) => (statusFilter === 'active' ? u.is_active : !u.is_active))
-        }
-
+        console.error('Failed to load admin users:', err)
         return {
-          data: filtered,
-          total: filtered.length,
+          data: [],
+          total: 0,
           page: 1,
           limit: 10,
           totalPages: 1,

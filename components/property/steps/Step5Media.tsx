@@ -227,7 +227,7 @@ export const Step5Media: React.FC<Step5Props> = ({
             value={manualUrl}
             onChange={(e) => setManualUrl(e.target.value)}
             placeholder="Or enter direct image URL (https://...)"
-            className="flex-1 input-custom text-xs"
+            className="flex-1 input-field text-xs"
           />
           <button
             type="button"

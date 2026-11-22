@@ -33,63 +33,22 @@ export const AdminAnalyticsPage: React.FC = () => {
     queryFn: async () => {
       try {
         const res = await api.get('/admin/analytics', { params: { range: timeRange } })
-        return res.data
+        return res.data?.data || res.data
       } catch (err) {
-        console.warn('Fallback admin analytics data:', err)
-        const fallback: AdminAnalyticsData = {
-          status_breakdown: [
-            { status: 'approved', count: 184, label: 'Approved & Live', color: 'bg-emerald-500' },
-            { status: 'pending_review', count: 26, label: 'Pending Review', color: 'bg-amber-500' },
-            { status: 'needs_changes', count: 14, label: 'Needs Changes', color: 'bg-orange-500' },
-            { status: 'rejected', count: 19, label: 'Rejected', color: 'bg-rose-500' },
-            { status: 'suspended', count: 12, label: 'Suspended', color: 'bg-purple-500' },
-            { status: 'sold', count: 32, label: 'Sold / Rented', color: 'bg-blue-500' },
-            { status: 'archived', count: 8, label: 'Archived', color: 'bg-gray-400' },
-          ],
-          category_breakdown: [
-            { category: 'residential_plot', label: 'Residential Plots', count: 142, percentage: 48 },
-            { category: 'agricultural_land', label: 'Agricultural Land', count: 68, percentage: 23 },
-            { category: 'commercial', label: 'Commercial Land & SCO', count: 44, percentage: 15 },
-            { category: 'industrial', label: 'Industrial Plots', count: 24, percentage: 8 },
-            { category: 'institutional', label: 'Institutional Land', count: 17, percentage: 6 },
-          ],
-          top_cities: [
-            { city: 'Noida', count: 62 },
-            { city: 'Gurgaon', count: 54 },
-            { city: 'Greater Noida', count: 41 },
-            { city: 'Jaipur', count: 33 },
-            { city: 'Lucknow', count: 28 },
-            { city: 'Delhi', count: 24 },
-            { city: 'Pune', count: 19 },
-            { city: 'Bengaluru', count: 16 },
-            { city: 'Hyderabad', count: 11 },
-            { city: 'Ahmedabad', count: 7 },
-          ],
-          weekly_enquiries: [
-            { week: 'W1 Sep', count: 28 },
-            { week: 'W2 Sep', count: 36 },
-            { week: 'W3 Sep', count: 45 },
-            { week: 'W4 Sep', count: 52 },
-            { week: 'W1 Oct', count: 48 },
-            { week: 'W2 Oct', count: 64 },
-            { week: 'W3 Oct', count: 71 },
-          ],
-          user_registrations: [
-            { month: 'May', count: 42 },
-            { month: 'Jun', count: 58 },
-            { month: 'Jul', count: 79 },
-            { month: 'Aug', count: 104 },
-            { month: 'Sep', count: 138 },
-            { month: 'Oct', count: 165 },
-          ],
+        console.error('Failed to load admin analytics data:', err)
+        return {
+          status_breakdown: [],
+          category_breakdown: [],
+          top_cities: [],
+          weekly_enquiries: [],
+          user_registrations: [],
           approval_stats: {
-            approval_rate: 91.2,
-            average_hours_to_approve: 4.2,
-            total_reviewed: 243,
-            fastest_hours: 0.6,
+            approval_rate: 100,
+            average_hours_to_approve: 0,
+            total_reviewed: 0,
+            fastest_hours: 0,
           },
         }
-        return fallback
       }
     },
     staleTime: 60 * 1000,
