@@ -1,9 +1,8 @@
 import axios from 'axios'
 import { supabase } from './supabase'
-import { useAuthStore } from '@/store/auth'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -32,9 +31,14 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      const { isAuthenticated, logout } = useAuthStore.getState()
-      if (isAuthenticated) {
-        await logout()
+      try {
+        await supabase.auth.signOut()
+        window.localStorage.removeItem('sastaplots-auth-v2')
+      } catch {
+        // Ignore signOut error
+      }
+      if (!window.location.pathname.startsWith('/login')) {
+        window.location.href = '/login'
       }
     }
     return Promise.reject(error)
