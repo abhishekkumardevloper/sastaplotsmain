@@ -15,21 +15,11 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
-      user: {
-        id: 'admin-1',
-        email: 'admin@sastaplots.com',
-        full_name: 'Administrator',
-        role: 'super_admin',
-        is_active: true,
-        phone_verified: true,
-        is_email_verified: true,
-        verification_status: 'verified',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-      isLoading: false,
-      isAuthenticated: true,
+    (set) => ({
+      // 1. Default state null aur unauthenticated hona chahiye
+      user: null,
+      isLoading: true,
+      isAuthenticated: false,
 
       setUser: (user) => set({ user, isAuthenticated: !!user, isLoading: false }),
       setLoading: (isLoading) => set({ isLoading }),
@@ -40,36 +30,47 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           // ignore
         }
-        set({ user: null, isAuthenticated: false })
+        set({ user: null, isAuthenticated: false, isLoading: false })
       },
 
       refreshUser: async () => {
         set({ isLoading: true })
         try {
-          const { data: { user: authUser } } = await supabase.auth.getUser()
-          if (!authUser) {
-            // Keep existing state if offline
-            set({ isLoading: false })
+          const {
+            data: { user: authUser },
+            error: authError,
+          } = await supabase.auth.getUser()
+
+          // 2. Agar valid Supabase session nahi hai toh user ko logout state mein bhejein
+          if (authError || !authUser) {
+            set({ user: null, isAuthenticated: false, isLoading: false })
             return
           }
-          const { data: profile } = await supabase
+
+          const { data: profile, error: profileError } = await supabase
             .from('profiles')
             .select('*')
             .eq('id', authUser.id)
             .single()
-          if (profile) {
-            set({ user: profile, isAuthenticated: true, isLoading: false })
-          } else {
-            set({ isLoading: false })
+
+          if (profileError || !profile) {
+            set({ user: null, isAuthenticated: false, isLoading: false })
+            return
           }
+
+          set({ user: profile, isAuthenticated: true, isLoading: false })
         } catch {
-          set({ isLoading: false })
+          set({ user: null, isAuthenticated: false, isLoading: false })
         }
       },
     }),
     {
-      name: 'sastaplots-auth',
-      partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated }),
+      // 3. Key name badalne se purana cached 'admin-1' localStorage automatically ignore ho jayega
+      name: 'sastaplots-auth-v2',
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 )
